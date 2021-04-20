@@ -3,6 +3,6 @@ class UsersController < ApplicationController
     @users = User.all
 
     render json: @users, 
-           each_serializer: User::Index::UserSerializer, status: :ok
+           each_serializer: User::Index::UserSerializer, status: :ok  
   end
 end
