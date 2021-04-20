@@ -5,7 +5,6 @@ class RegistrationsController < DeviseTokenAuth::RegistrationsController
     @resource = User.new(user_params)
 
     if @resource.save
-
       render json: @resource, 
              serializer: User::Create::RegistrationSerializer, status: :created
     else
