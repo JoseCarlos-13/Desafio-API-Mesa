@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/json_body'
 require 'support/request_helper'
 
 RSpec.describe "Sessions", type: :request do

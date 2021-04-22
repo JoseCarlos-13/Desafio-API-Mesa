@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'support/json_body.rb'
+require 'support/request_helper.rb'
 
 RSpec.describe "RegistrationsController", type: :request do
   describe "POST #create" do
