@@ -34,4 +34,16 @@ RSpec.describe "Sessions", type: :request do
       end
     end
   end
+
+  describe "DELETE #destroy" do
+    context 'when the user log out' do
+      it 'must return 204 status code' do
+        user = create(:user)
+
+        delete "/auth/sign_out", headers: get_headers(user)
+
+        expect(response).to have_http_status(:no_content)
+      end
+    end
+  end
 end
