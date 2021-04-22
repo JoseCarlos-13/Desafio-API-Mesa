@@ -21,6 +21,7 @@ RSpec.describe "Places", type: :request do
 
         expect(json_body).to have_key(:id)
         expect(json_body).to have_key(:name)
+        expect(json_body).to have_key(:user_id)
       end
     end
 

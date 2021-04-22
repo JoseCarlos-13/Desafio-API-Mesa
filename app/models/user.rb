@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :places, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   validates :name, presence: true
 end
