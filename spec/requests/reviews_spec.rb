@@ -51,4 +51,32 @@ RSpec.describe "Reviews", type: :request do
       end
     end
   end
+
+  describe "GET #show" do
+    context "when the user see the place review" do
+      it 'must return 200 status code' do
+        user = create(:user)
+        place = create(:place, user_id: user.id)
+        review = create(:review, user_id: user.id, place_id: place.id)
+
+        get "/reviews/#{review.id}", headers: get_headers(user)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'must return the selected review' do
+        user = create(:user)
+        place = create(:place, user_id: user.id)
+        review = create(:review, user_id: user.id, place_id: place.id)
+
+        get "/reviews/#{review.id}", headers: get_headers(user)
+
+        expect(json_body).to have_key(:id)
+        expect(json_body).to have_key(:rating)
+        expect(json_body).to have_key(:comment)
+        expect(json_body).to have_key(:user_id)
+        expect(json_body).to have_key(:place_id)
+      end
+    end
+  end
 end
