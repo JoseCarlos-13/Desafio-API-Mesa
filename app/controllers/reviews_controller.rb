@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   def create
-    review = Review.new(review_params)
+    review = Review.new(review_params.merge!(user_id: current_user.id))
 
     if review.save
       render json: review, 
