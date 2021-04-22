@@ -46,7 +46,7 @@ RSpec.describe "Reviews", type: :request do
         review_params = attributes_for(:review, rating: nil, comment: nil, user_id: nil, place_id: nil)
 
         post "/reviews", params: { review: review_params }, headers: get_headers(user)
-        
+
         expect(json_body).to have_key(:errors)
       end
     end
