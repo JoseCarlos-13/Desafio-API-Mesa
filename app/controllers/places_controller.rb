@@ -18,7 +18,7 @@ class PlacesController < ApplicationController
              each_serializer: Place::Index::List::PlaceSerializer, status: :ok
     else
       places = Place.by_distance(:origin => [params[:lat], params[:lng]])
-      binding.pry
+
       render json: places, 
              each_serializer: Place::Index::Map::PlaceSerializer, status: :ok
     end
