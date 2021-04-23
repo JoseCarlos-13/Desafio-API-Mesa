@@ -78,16 +78,16 @@ RSpec.describe "Places", type: :request do
     context 'when the list is in map order' do
       it 'must return a list in map order' do
         user = create(:user)
-        place_1 = create(:place, name: 'Patio Maceió', lat: -9.558020174564106, lng: -35.746253289850294, user_id: user.id)
-        place_2 = create(:place, name: 'Park Shop', lat: -9.553915149483348, lng: -35.75861290850986, user_id: user.id)
-        place_3 = create(:place, name: 'Mercado Lider', lat: -9.568684544450356, lng: -35.75642422617252, user_id: user.id)
-        list_params = { list_type: 'map' }
+        place_1 = create(:place, name: 'São Paulo', lat: -23.517304087332068, lng: -46.63105393831187, user_id: user.id)
+        place_2 = create(:place, name: 'Alagoas', lat: -9.418265454411237, lng: -36.74967609282641, user_id: user.id)
+        place_3 = create(:place, name: 'Bahia', lat: -12.043981969328177, lng: -41.67035605483432, user_id: user.id)
+        list_params = { list_type: 'map', lat: -9.418265454411237, lng: -36.74967609282641 }
 
         get "/places", params: list_params, headers: get_headers(user)
 
-        expect(json_body[0][:name]).to eq(place_1.name)
-        expect(json_body[1][:name]).to eq(place_2.name)
-        expect(json_body[2][:name]).to eq(place_3.name)
+        expect(json_body[0][:name]).to eq(place_2.name)
+        expect(json_body[1][:name]).to eq(place_3.name)
+        expect(json_body[2][:name]).to eq(place_1.name)
       end
     end
   end
