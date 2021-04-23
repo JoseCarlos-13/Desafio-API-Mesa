@@ -7,6 +7,7 @@ gem 'pry', '~> 0.13.1'
 gem 'devise'
 gem 'devise_token_auth'
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'geokit-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.6'
