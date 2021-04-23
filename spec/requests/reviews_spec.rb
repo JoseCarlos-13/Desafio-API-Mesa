@@ -74,8 +74,8 @@ RSpec.describe "Reviews", type: :request do
         expect(json_body).to have_key(:id)
         expect(json_body).to have_key(:rating)
         expect(json_body).to have_key(:comment)
-        expect(json_body).to have_key(:user_id)
-        expect(json_body).to have_key(:place_id)
+        expect(json_body).to have_key(:user)
+        expect(json_body).to have_key(:place)
       end
     end
   end
