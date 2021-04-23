@@ -10,6 +10,12 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def show
+    review = Review.find(params[:id])
+
+    render json: review, serializer: Review::Show::ReviewSerializer, status: :ok
+  end
+
   def review_params
     params.require(:review).permit(:rating, :comment, :place_id)
   end
