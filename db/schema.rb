@@ -12,11 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2021_04_23_173530) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "places", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.float "lat"
     t.float "lng"
     t.index ["user_id"], name: "index_places_on_user_id"
@@ -25,8 +28,8 @@ ActiveRecord::Schema.define(version: 2021_04_23_173530) do
   create_table "reviews", force: :cascade do |t|
     t.integer "rating"
     t.string "comment"
-    t.integer "user_id", null: false
-    t.integer "place_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "place_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["place_id"], name: "index_reviews_on_place_id"
