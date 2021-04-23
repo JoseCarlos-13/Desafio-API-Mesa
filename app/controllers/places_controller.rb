@@ -10,7 +10,21 @@ class PlacesController < ApplicationController
     end
   end
 
+  def index
+    if params[:list_type] == 'list'
+      places = Place.all.order(name: :asc)
+
+      render json: places, 
+             each_serializer: Place::Index::List::PlaceSerializer, status: :ok
+    elsif params[:list_type] == 'map'
+      places = Place.by_distance(:origin => [params[:lat], params[:lng]])
+
+      render json: places, 
+             each_serializer: Place::Index::Map::PlaceSerializer, status: :ok
+    end
+  end
+
   def place_params
-    params.require(:place).permit(:name)
+    params.require(:place).permit(:name, :lat, :lng)
   end
 end

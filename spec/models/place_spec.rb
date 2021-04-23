@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Place, type: :model do
   context 'validations' do
     it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:lat) }
+    it { is_expected.to validate_presence_of(:lng) }
   end
 
   context 'associations' do

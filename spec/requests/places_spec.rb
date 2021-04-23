@@ -6,7 +6,7 @@ RSpec.describe "Places", type: :request do
     context 'when the place is created' do
       it 'must return the 201 status code' do
         user = create(:user)
-        place_params = attributes_for(:place, user_id: user.id)
+        place_params = attributes_for(:place, name: 'Patio Maceió', lat: -9.558020174564106, lng: -35.746253289850294, user_id: user.id)
 
         post "/places", params: { place: place_params }, headers: get_headers(user)
 
@@ -15,7 +15,7 @@ RSpec.describe "Places", type: :request do
 
       it 'must return the place created' do
         user = create(:user)
-        place_params = attributes_for(:place, user_id: user.id)
+        place_params = attributes_for(:place, name: 'Patio Maceió', lat: -9.558020174564106, lng: -35.746253289850294, user_id: user.id)
 
         post "/places", params: { place: place_params }, headers: get_headers(user)
 
@@ -28,7 +28,7 @@ RSpec.describe "Places", type: :request do
     context 'when the place is not created' do
       it 'must return the 422 status code' do
         user = create(:user)
-        place_params = attributes_for(:place, name: nil, user_id: nil)
+        place_params = attributes_for(:place, lat: nil, lng: nil, name: nil, user_id: nil)
 
         post "/places", params: { place: place_params }, headers: get_headers(user)
 
@@ -37,11 +37,57 @@ RSpec.describe "Places", type: :request do
 
       it 'must return the 422 status code' do
         user = create(:user)
-        place_params = attributes_for(:place, name: nil, user_id: nil)
+        place_params = attributes_for(:place, lat: nil, lng: nil, name: nil, user_id: nil)
 
         post "/places", params: { place: place_params }, headers: get_headers(user)
 
         expect(json_body).to have_key(:errors)
+      end
+    end
+  end
+
+  describe "GET #index" do
+    context 'when the list is in alphabeat order' do
+      it 'must return 200 status code' do
+        user = create(:user)
+        place_1 = create(:place, name: 'Hospital Metropolitano de Alagoas', lat: -9.558951204376811, lng: -35.76569394049623, user_id: user.id)
+        place_2 = create(:place, name: 'Park Shop', lat: -9.553915149483348, lng: -35.75861290850986, user_id: user.id)
+        place_3 = create(:place, name: 'Mercado Lider', lat: -9.568684544450356, lng: -35.75642422617252, user_id: user.id)
+        list_params = { list_type: 'list' }
+
+        get "/places", params: list_params, headers: get_headers(user)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'must return a list in alphabetic order' do
+        user = create(:user)
+        place_1 = create(:place, name: 'Hospital Metropolitano de Alagoas', lat: -9.558951204376811, lng: -35.76569394049623, user_id: user.id)
+        place_2 = create(:place, name: 'Park Shop', lat: -9.553915149483348, lng: -35.75861290850986, user_id: user.id)
+        place_3 = create(:place, name: 'Mercado Lider', lat: -9.568684544450356, lng: -35.75642422617252, user_id: user.id)
+        list_params = { list_type: 'list' }
+
+        get "/places", params: list_params, headers: get_headers(user)
+
+        expect(json_body[0][:name]).to eq(place_1.name)
+        expect(json_body[1][:name]).to eq(place_3.name)
+        expect(json_body[2][:name]).to eq(place_2.name)
+      end
+    end
+
+    context 'when the list is in map order' do
+      it 'must return a list in map order' do
+        user = create(:user)
+        place_1 = create(:place, name: 'Patio Maceió', lat: -9.558020174564106, lng: -35.746253289850294, user_id: user.id)
+        place_2 = create(:place, name: 'Park Shop', lat: -9.553915149483348, lng: -35.75861290850986, user_id: user.id)
+        place_3 = create(:place, name: 'Mercado Lider', lat: -9.568684544450356, lng: -35.75642422617252, user_id: user.id)
+        list_params = { list_type: 'map' }
+
+        get "/places", params: list_params, headers: get_headers(user)
+
+        expect(json_body[0][:name]).to eq(place_1.name)
+        expect(json_body[1][:name]).to eq(place_2.name)
+        expect(json_body[2][:name]).to eq(place_3.name)
       end
     end
   end
